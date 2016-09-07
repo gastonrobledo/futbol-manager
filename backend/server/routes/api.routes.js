@@ -1,12 +1,49 @@
-var multiparty = require('connect-multiparty');
-var multipartyMiddleware = multiparty();
+var express = require('express');
+var jwt = require('jsonwebtoken');
 
-
+var teams = require('../api/teams.controller');
+var auth = require('../api/auth.controller');
 
 module.exports = function (app) {
 
-    var controller = require('../api/teams.controller');
+    //Auth method
+    app.post('/api/auth', auth.auth);
+    // route middleware to verify a token
+    var tokenMiddleWare = express.Router();
+    tokenMiddleWare.use(function(req, res, next) {
+
+        // check header or url parameters or post parameters for token
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+        // decode token
+        if (token) {
+
+            // verifies secret and checks exp
+            jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+                if (err) {
+                    return res.json({ success: false, message: 'Failed to authenticate token.' });
+                } else {
+                    // if everything is good, save to request for use in other routes
+                    req.user = decoded;
+                    next();
+                }
+            });
+
+        } else {
+
+            // if there is no token
+            // return an error
+            return res.status(403).send({
+                success: false,
+                message: 'No token provided.'
+            });
+
+        }
+    });
+
+    app.use('/api', tokenMiddleWare);
+
     // Teams Methods
-    app.get('/api/teams', controller.getTeams);
+    app.get('/api/teams', teams.getTeams);
 
 };
