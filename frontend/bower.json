@@ -1,0 +1,25 @@
+{
+  "name": "gibike",
+  "version": "0.1.0",
+  "devDependencies": {
+    "angular-mocks": "~1.4"
+  },
+  "dependencies": {
+    "angular": "~1.4",
+    "angular-animate": "~1.4.7",
+    "angular-bootstrap": "~0.14.3",
+    "angular-cookies": "~1.4.6",
+    "angular-sanitize": "~1.4.6",
+    "angular-ui-router": "~0.2",
+    "lodash": "~3.10.1",
+    "modernizr": "~2.8.3",
+    "jquery": "~2.1.4",
+    "angular-lazy-img": "~1.2.2",
+    "angular-bootstrap-lightbox": "~0.10.0",
+    "angular-touch": "~1.4.7"
+  },
+  "resolutions": {
+    "angular": "1.4.6",
+    "angular-bootstrap": "0.14.3"
+  }
+}

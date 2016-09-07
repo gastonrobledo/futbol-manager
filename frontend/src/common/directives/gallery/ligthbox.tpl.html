@@ -1,0 +1,46 @@
+<div class="modal-header">
+    <div class="modal-title">
+
+        <h3 class="poster">
+            <div class="row">
+                <div class="col-md-1">
+                    <img ng-src="{{image._embedded.uploader.avatar_url}}" />
+                </div>
+                <div class="col-md-11">
+                    <div>
+                        <div class="pull-left">{{image._embedded.uploader.name}}</div>
+                        <small class="pull-right">
+                            <span><i class="fa fa-heart"></i> {{image.likes}}</span>
+                        </small>
+                        <div class="clearfix"></div>
+                    </div>
+                    <small>@{{image._embedded.uploader.username}}</small>
+                </div>
+            </div>
+        </h3>
+
+
+    </div>
+    <button ng-click="close();" class="btn btn-default btn-circle close-btn"><i class="glyphicon glyphicon-remove"></i>
+    </button>
+</div>
+<div class="modal-body">
+    <img class="width-full" lazy-img="{{image.images.original}}" src="/assets/images/loading.svg"/>
+
+    <div class="row">
+        <div class="col-md-8">
+            <small>{{image.caption}}</small>
+        </div>
+        <div class="col-md-4">
+            <small>Published on {{image.date_published | date: 'MM/d/yyyy H:mm'}}</small>
+        </div>
+    </div>
+    <div class="row" ng-if="image.location">
+
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-xs" href="#" ng-click="collapsed = !collapsed">Show Map Location</button>
+            <img ng-show="collapsed" class="map"
+                 ng-src="http://maps.googleapis.com/maps/api/staticmap?center={{image.location.latitude}},{{image.location.longitude}}&markers=color:blue%7C{{image.location.latitude}},{{image.location.longitude}}&zoom=14&size=400x300&scale=1&sensor=false"/>
+        </div>
+    </div>
+</div>
