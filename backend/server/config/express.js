@@ -73,10 +73,7 @@ module.exports = function() {
         }
     });
 
-    app.use(express.static(path.resolve('./static'))); // set the static files location
-
     var server = http.Server(app);
-    var io = require('socket.io')(server);
 
     // Globbing model files
     config.getGlobbedFiles('./server/models/**/*.js').forEach(function(modelPath) {
@@ -85,7 +82,7 @@ module.exports = function() {
 
     // Globbing routing files
     config.getGlobbedFiles('./server/routes/**/*.js').forEach(function(routePath) {
-        require(path.resolve(routePath))(app, io);
+        require(path.resolve(routePath))(app);
     });
 
 
