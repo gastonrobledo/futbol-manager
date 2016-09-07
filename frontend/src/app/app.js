@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
     //Define Main Module name
-    window.mainApp = 'olapic';
+    window.mainApp = 'futbol_manager';
 
 
     // Add a new vertical module registration
@@ -23,8 +23,7 @@
         'templates-common',
         'ui.bootstrap',
         'ui.router',
-        'ngTouch',
-        'ngAnimate',
+        'ngAnimate'
     ])
         .config(Config)
         .controller('AppController', AppController);
@@ -66,10 +65,6 @@
             $scope.pageTitle = toState.data.pageTitle;
             $scope.state = $state.$current.name;
         });
-
-        $rootScope.todos = [{
-            title: 'This is my todo'
-        }];
     }
 
     //Then define the init function for starting up the application

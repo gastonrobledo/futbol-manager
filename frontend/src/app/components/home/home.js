@@ -37,7 +37,7 @@
                 }
             },
             data: {
-                pageTitle: 'Olapic Test'
+                pageTitle: 'Futbol Manager'
             }
         });
     }

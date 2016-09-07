@@ -352,7 +352,7 @@ module.exports = function (grunt) {
             // TODO: for debug, with chrome, not singleRun, maybe background?
             continuous: {
                 singleRun: true,
-                browsers: ['PhantomJS']
+                browsers: ['Chrome']
             }
         },
 

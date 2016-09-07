@@ -19,7 +19,7 @@ module.exports = function ( karma ) {
       'src/assets/**/*.js'
     ],
     frameworks: [ 'jasmine' ],
-    plugins: [ 'karma-jasmine', 'karma-chrome-launcher', 'karma-phantomjs-launcher', 'karma-coffee-preprocessor', 'karma-coverage', 'karma-junit-reporter', 'karma-html2js-preprocessor'],
+    plugins: [ 'karma-jasmine', 'karma-chrome-launcher', 'karma-coffee-preprocessor', 'karma-coverage', 'karma-junit-reporter', 'karma-html2js-preprocessor'],
     preprocessors: {
       '**/*.coffee': 'coffee',
       'src/app/**/*.js': ['coverage'],
@@ -36,10 +36,7 @@ module.exports = function ( karma ) {
     /**
      * How to report, by default.
      */
-    reporters: ['coverage', 'junit', 'dots'],
-    junitReporter: {
-        outputFile: 'test-results.xml'
-    },
+    reporters: ['coverage', 'dots'],
     coverageReporter: {
 	  type : 'cobertura',
 	  dir : 'coverage/'
@@ -71,6 +68,6 @@ module.exports = function ( karma ) {
      * open and the tests will automatically occur there during the build. This has
      * the aesthetic advantage of not launching a browser every time you save.
      */
-    browsers: []
+    browsers: ['Chrome']
   });
 };

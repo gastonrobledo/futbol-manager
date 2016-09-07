@@ -61,16 +61,13 @@ module.exports = {
     vendor_files: { // jshint ignore:line
         js: [
             'vendor/jquery/dist/jquery.min.js',
-            'vendor/modernizr/modernizr.js',
             'vendor/angular/angular.js',
             'vendor/angular-animate/angular-animate.min.js',
             'vendor/angular-ui-router/release/angular-ui-router.js',
             'vendor/angular-ui-utils/modules/route/route.js',
             'vendor/angular-bootstrap/ui-bootstrap.min.js',
             'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
-            'vendor/angular-touch/angular-touch.min.js',
-            'vendor/lodash/lodash.min.js',
-            'vendor/angular-lazy-img/release/angular-lazy-img.min.js'
+            'vendor/lodash/dist/lodash.min.js'
         ],
         css: [
         ],
