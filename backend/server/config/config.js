@@ -44,3 +44,4 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 
     return output;
 };
+module.exports.secretKey = 'th15I55p4rt4$@!';

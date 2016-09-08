@@ -6,7 +6,6 @@ var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var cors           = require('cors');
 var path           = require('path');
-var compress       = require('compression');
 var helmet         = require('helmet');
 var config         = require('./config');
 var http           = require('http');
@@ -16,6 +15,9 @@ module.exports = function() {
 
     var app = express();
 
+    app.set('superSecret', config.secretKey); // secret variable
+
+
     app.use(cors());
 
     // get all data/stuff of the body (POST) parameters
@@ -23,15 +25,6 @@ module.exports = function() {
     app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
     app.use(bodyParser.json({type: 'application/vnd.api+json'})); // parse application/vnd.api+json as json
     app.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
-
-
-    // Should be placed before express.static
-    app.use(compress({
-        filter: function(req, res) {
-            return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
-        },
-        level: 9
-    }));
 
     // Showing stack errors
     app.set('showStackError', true);
@@ -72,6 +65,7 @@ module.exports = function() {
             return next();
         }
     });
+
 
     var server = http.Server(app);
 
