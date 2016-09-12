@@ -2,6 +2,7 @@ var express = require('express');
 var jwt = require('jsonwebtoken');
 
 var teams = require('../api/teams.controller');
+var matches = require('../api/matches.controller');
 var auth = require('../api/auth.controller');
 
 module.exports = function (app) {
@@ -43,6 +44,9 @@ module.exports = function (app) {
 
     app.use('/api', tokenMiddleWare);
 
+    // Matches methods
+    app.post('/api/matches', matches.createMatch);
+    app.get('/api/matches', matches.getMyMatches);
     // Teams Methods
     app.get('/api/teams', teams.getTeams);
 
