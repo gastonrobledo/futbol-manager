@@ -51,19 +51,7 @@ module.exports = function() {
         // Passing the request url to environment locals
         res.locals.url = req.protocol + ':// ' + req.headers.host + req.url;
 
-        if (process.env.NODE_ENV === 'production') {
-            // Redirect everything to HTTPS
-            res.setHeader('Strict-Transport-Security', 'max-age=8640000; includeSubDomains');
-            var securedUrl = 'https://' + req.host + req.url;
-
-            if (req.headers['x-forwarded-proto'] !== 'https') {
-                return res.redirect(301, securedUrl);
-            } else {
-                return next();
-            }
-        } else {
-            return next();
-        }
+        return next();
     });
 
 
