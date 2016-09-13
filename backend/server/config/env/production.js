@@ -5,5 +5,5 @@ var path = require('path');
 var port = require('./all').port;
 
 module.exports = {
-    db: 'mongodb://[user]:[pass]@[ip]/futbol-manager'
+    db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/futbol-manager',
 };
