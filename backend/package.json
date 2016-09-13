@@ -1,5 +1,6 @@
 {
   "name": "futbol-manager",
+  "version": "0.0.1",
   "main": "server.js",
   "dependencies": {
     "async": "^0.9.2",
@@ -10,6 +11,7 @@
     "connect-multiparty": "^2.0.0",
     "cors": "^2.5.2",
     "express": "~4.5.1",
+    "forever": "^0.15.2",
     "glob": "~3.2.9",
     "helmet": "~0.2.1",
     "htmlparser2": "^3.8.3",
@@ -17,6 +19,8 @@
     "lodash": "^4.15.0",
     "method-override": "~2.0.2",
     "mongoose": "^4.6.0",
+    "mongoose-bcrypt": "^1.4.2",
+    "mongoose-hidden": "^0.6.3",
     "validator": "^3.22.1"
   }
 }
