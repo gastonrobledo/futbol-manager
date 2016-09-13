@@ -6,19 +6,26 @@ var Players = mongoose.model('Players');
 exports.auth = function(req,res){
 
     Players.findOne({"email": req.body.email}).lean().then(function(player){
-        var valid = Players.verifyPasswordSync(req.body.password);
-        if(valid) {
-            //search for user then create token
-            var token = jwt.sign(player, config.secretKey, {
-                expiresIn: '24h' // expires in 24 hours
-            });
+        if(player) {
+            var valid = Players.verifyPasswordSync(req.body.password);
+            if (valid) {
+                //search for user then create token
+                var token = jwt.sign(player, config.secretKey, {
+                    expiresIn: '24h' // expires in 24 hours
+                });
 
-            res.json({
-                success: true,
-                token: token
-            });
+                res.json({
+                    success: true,
+                    token: token
+                });
+            } else {
+                res.send(400).json({
+                    success: false,
+                    message: "Email / Password invalid"
+                });
+            }
         }else{
-            res.send(400).json({
+            res.status(400).json({
                 success: false,
                 message: "Email / Password invalid"
             });
