@@ -7,9 +7,9 @@ mongoose.Promise = global.Promise;
  * Games Schema
  */
 var Game = new Schema({
-    teams: {
+    match: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Teams',
+        ref: 'Matches',
         required: true
     },
     assistants:[{

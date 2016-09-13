@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    mongooseHidden = require('mongoose-hidden')({ defaultHidden: { password: true } });
 
 
 /**
@@ -30,6 +31,7 @@ var Player = new Schema({
     password: {
         type: String,
         default: '',
+        bcrypt: true,
         validate: [validateLocalStrategyPassword, 'Password should be longer']
     },
     firstName: {
@@ -50,6 +52,11 @@ var Player = new Schema({
     }
 });
 
-Player.index({  firstName: 1 });
+Player.set('toJSON', { hide: 'password' });
+
+Player.index({  email: 1 });
+
+Player.plugin(require('mongoose-bcrypt'));
+Player.plugin(mongooseHidden);
 
 mongoose.model('Players', Player);

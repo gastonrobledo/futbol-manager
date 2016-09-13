@@ -7,13 +7,13 @@ mongoose.Promise = global.Promise;
  * Matches Schema
  */
 var Match = new Schema({
-    Name: {
+    name: {
         type: String,
         required: true
     },
-    teams: [{
+    players: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Teams'
+        ref: 'Players'
     }],
     numberOfPlayers: {
         type: Number,

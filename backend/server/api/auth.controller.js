@@ -6,7 +6,8 @@ var Players = mongoose.model('Players');
 exports.auth = function(req,res){
 
     Players.findOne({"email": req.body.email}).lean().then(function(player){
-        if(player.password === req.body.password) {
+        var valid = Players.verifyPasswordSync(req.body.password);
+        if(valid) {
             //search for user then create token
             var token = jwt.sign(player, config.secretKey, {
                 expiresIn: '24h' // expires in 24 hours

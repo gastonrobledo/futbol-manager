@@ -3,6 +3,7 @@ var jwt = require('jsonwebtoken');
 
 var teams = require('../api/teams.controller');
 var matches = require('../api/matches.controller');
+var players = require('../api/players.controller');
 var auth = require('../api/auth.controller');
 
 module.exports = function (app) {
@@ -41,11 +42,16 @@ module.exports = function (app) {
 
         }
     });
+    //Register method
+    app.post('/api/players', players.register);
 
     app.use('/api', tokenMiddleWare);
 
+    //Authorized method below
+
     // Matches methods
     app.post('/api/matches', matches.createMatch);
+    app.put('/api/matches/:id', matches.updateMatch);
     app.get('/api/matches', matches.getMyMatches);
     // Teams Methods
     app.get('/api/teams', teams.getTeams);

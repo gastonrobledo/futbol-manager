@@ -5,19 +5,30 @@ var Teams = mongoose.model('Teams');
 var _ = require('lodash');
 
 exports.createMatch = function (req, res) {
+    var data = req.body;
     var match = new Matches();
-    match.teams = [];
-    match.numberOfPlayers = req.body.numberOfPlayers;
-    if (req.body.lat && req.body.lng) {
+    match.name = data.name;
+    match.numberOfPlayers = data.numberOfPlayers;
+    match.daysOfWeek = data.daysOfWeek || [];
+    if (data.lat && data.lng) {
         match.locationMatch = {
-            lat: req.body.lat,
-            lng: req.body.lng
+            lat: data.lat,
+            lng: data.lng
         };
     }
-    match.time = req.body.timeToPlay;
-    match.admins = [
-        req.user._id
-    ];
+    match.players = data.players || [];
+    match.time = data.time;
+
+    var admins = data.admins || [];
+
+    var mySelfAsAdmin = _.find(admins, function(id){
+        return id === req.user._id;
+    });
+    if(!mySelfAsAdmin){
+        admins.push(req.user._id);
+    }
+
+    match.admins = admins;
     match.save(function (err, match) {
         if (!err) {
             res.status(201).send(match);
@@ -27,30 +38,61 @@ exports.createMatch = function (req, res) {
     });
 };
 
+exports.updateMatch = function (req, res) {
+    Matches.findOne({'_id': req.params.id}, function(err, match){
+        if(!match){
+            return res.status(404).send({message: "Match not found"});
+        }
+        var data = req.body;
+        match.name = data.name;
+        match.numberOfPlayers = data.numberOfPlayers;
+        match.daysOfWeek = data.daysOfWeek;
+        if (data.lat && data.lng) {
+            match.locationMatch = {
+                lat: data.lat,
+                lng: data.lng
+            };
+        }
+        match.players = data.players || [];
+        match.time = data.time;
+        var admins = data.admins || [];
+
+        var mySelfAsAdmin = _.find(admins, function(id){
+            return id === req.user._id;
+        });
+        if(!mySelfAsAdmin){
+            admins.push(req.user._id);
+        }
+
+        match.admins = admins;
+        match.save(function (err, match) {
+            if (!err) {
+                res.status(200).send(match);
+            } else {
+                res.status(500).send({message: err.message});
+            }
+        });
+    });
+
+};
+
 exports.getMyMatches = function (req, res) {
 
-    Teams.find({"players": {"$in": [req.user]}}).exec(function (err, teams) {
-        var teams_ids = _.map(teams, '_id');
-        Matches
-            .find({
-                "$or": [
-                    {"admins": {"$in": [req.user._id]}},
-                    {"teams": {"$in": [teams_ids]}}
-                ]
-            })
-            .lean()
-            .populate('teams', 'name players')
-            .exec(function (err, matches) {
-                Players.populate(matches, {
-                    path: 'teams.players',
-                    select: 'firstName lastName email'
-                }, function (err, populatedMatches) {
-                    if (!err) {
-                        res.status(200).jsonp(populatedMatches);
-                    } else {
-                        res.status(500).send({message: err.message});
-                    }
-                });
-            });
-    });
+    Matches
+        .find({
+            "$or": [
+                {"admins": {"$in": [req.user._id]}},
+                {"players": {"$in": [req.user._id]}}
+            ]
+        })
+        .lean()
+        .populate('players', 'firstName lastName email')
+        .exec(function (err, matches) {
+
+            if (!err) {
+                res.status(200).jsonp(matches);
+            } else {
+                res.status(500).send({message: err.message});
+            }
+        });
 };

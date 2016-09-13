@@ -11,6 +11,10 @@ var Team = new Schema({
         type: String,
         required: true
     },
+    match: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Matches'
+    },
     players: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Players'
