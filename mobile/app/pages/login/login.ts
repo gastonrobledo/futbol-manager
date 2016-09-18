@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
-import { TabsPage } from '../tabs/tabs';
+import { HomePage } from '../home/home';
 
 
 @Component({
@@ -9,17 +9,17 @@ import { TabsPage } from '../tabs/tabs';
   providers: [AuthService]
 })
 export class LoginPage {
-  username: string;
+  email: string;
   password: string;
   constructor(public nav: NavController, public platform: Platform, public authApi: AuthService) {
   }
 
   login() {
-    this.authApi.auth(this.username, this.password).subscribe(
+    this.authApi.auth(this.email, this.password).subscribe(
       data => {
         console.log(data);
         //Navigate to home page
-        this.nav.setRoot(TabsPage);
+        this.nav.setRoot(HomePage);
       }
     )
   }

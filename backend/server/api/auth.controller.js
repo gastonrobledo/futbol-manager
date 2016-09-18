@@ -10,7 +10,6 @@ exports.auth = function(req,res){
             player.verifyPassword(req.body.password, function(err, valid){
                 if (valid) {
                     //search for user then create token
-                    console.log(valid, config.secretKey);
                     jwt.sign(player, config.secretKey, {
                         expiresIn: '24h' // expires in 24 hours
                     }, function(err, token){
@@ -21,7 +20,7 @@ exports.auth = function(req,res){
                         });
                     });
                 } else {
-                    res.send(400).json({
+                    res.status(400).json({
                         success: false,
                         message: "Email / Password invalid"
                     });
