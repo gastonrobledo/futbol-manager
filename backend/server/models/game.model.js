@@ -16,7 +16,16 @@ var Game = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Players'
     }],
-    score: {},
+    teamA_score: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    teamB_score: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     when:{
         type: Date
     },
@@ -32,4 +41,4 @@ var Game = new Schema({
 
 Game.index({name: 1});
 
-mongoose.model('Games', Game);
+mongoose.model('Game', Game);

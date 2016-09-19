@@ -42,6 +42,11 @@ var Player = new Schema({
         type: String,
         required: true
     },
+    isAdmin: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     updated: {
         type: Date,
         default: Date.now
@@ -59,4 +64,4 @@ Player.index({  email: 1 });
 Player.plugin(require('mongoose-bcrypt'));
 Player.plugin(mongooseHidden);
 
-mongoose.model('Players', Player);
+mongoose.model('Player', Player);

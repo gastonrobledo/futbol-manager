@@ -1,19 +1,19 @@
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 var config  = require('../config/config');
-var Players = mongoose.model('Players');
+var Player = mongoose.model('Player');
 
 exports.auth = function(req,res){
 
-    Players.findOne({"email": req.body.email}).then(function(player){
+    Player.findOne({"email": req.body.email}).then(function(player){
         if(player) {
             player.verifyPassword(req.body.password, function(err, valid){
                 if (valid) {
                     //search for user then create token
-                    jwt.sign(player, config.secretKey, {
+                    var sanitized = {'_id': player._id, 'email': player.email};
+                    jwt.sign(sanitized, config.secretKey, {
                         expiresIn: '24h' // expires in 24 hours
                     }, function(err, token){
-                        console.log(err, token);
                         res.json({
                             success: true,
                             token: token

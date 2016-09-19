@@ -15,14 +15,22 @@ var Match = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Players'
     }],
-    numberOfPlayers: {
+    playersPerTeam: {
         type: Number,
         default: 7
     },
-    locationMatch: {},
-    daysOfWeek: [{
+    teamA: {
+        type: String,
+        required: true
+    },
+    teamB: {
+        type: String,
+        required: true
+    },
+    location: {},
+    day: {
         type: Number
-    }],
+    },
     time: {
         type: String,
         required: true
@@ -43,4 +51,4 @@ var Match = new Schema({
 
 Match.index({name: 1});
 
-mongoose.model('Matches', Match);
+mongoose.model('Match', Match);

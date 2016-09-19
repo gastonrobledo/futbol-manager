@@ -18,6 +18,7 @@
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.15.0",
     "method-override": "~2.0.2",
+    "moment": "^2.15.0",
     "mongoose": "^4.6.0",
     "mongoose-bcrypt": "^1.4.2",
     "mongoose-hidden": "^0.6.3",
